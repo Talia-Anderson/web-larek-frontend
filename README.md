@@ -124,27 +124,28 @@ yarn build
 
 # События
 
-"click: on_Catalogue_card" - кликнули на карточку в каталоге
-"click: next_basket" - событие перехода в попап корзины
-"click: toggle_basket" - клик на кнопке "поместить в корзину/удалить из корзины"
-"click: online_purchaise_form" - клик на кнопке "онлайн"
-"click: on_place" - клик на кнопке "при доставке"
-"click: new_purchases" - клик на кнопке "за новыми покупками"
-"click: close_popup" - закрытие попапа
-"click: basket_button" - щелчок на кнопке корзины
-"click: card payment" - клик на кнопке выбора оплаты карточкой
-"click: cash payment" - клик на кнопке выбора оплаты наличными
-"click: personal info first button" - нажатие кнопки "далее"
-"click: personalInfoSecondNext" - щелчок на форме оформить
-"click: order success" - кнопка в форме удачной сделки
-"click: delete__card" - удаление карточки
+- "click: on_Catalogue_card" - кликнули на карточку в каталоге
+- "click: next_basket" - событие перехода в попап корзины
+- "click: toggle_basket" - клик на кнопке "поместить в корзину/удалить из корзины"
+- "click: online_purchaise_form" - клик на кнопке "онлайн"
+- "click: on_place" - клик на кнопке "при доставке"
+- "click: new_purchases" - клик на кнопке "за новыми покупками"
+- "click: close_popup" - закрытие попапа
+- "click: basket_button" - щелчок на кнопке корзины
+- "click: card payment" - клик на кнопке выбора оплаты карточкой
+- "click: cash payment" - клик на кнопке выбора оплаты наличными
+- "click: personal info first button" - нажатие кнопки "далее"
+- "click: personalInfoSecondNext" - щелчок на форме оформить
+- "click: order success" - кнопка в форме удачной сделки
+- "click: delete__card" - удаление карточки
 
-"items: changed" - любое изменение карточек, данные изменились
-"put-get-item" - добавить/удалить в/из корзины, перемещение товаров в / из корзину
-"modal:open"/"modal:close" - открыть/закрыть модальное окно
-"address_input:change" - изменение адреса, адрес изменился
-"email_input:change" - изменение почты, почта изменилась
-"phone_input:change" - телефон изменился
-"personal_info_first_next" - щелчок на форме оформить после первого ввода данных
+- "items: changed" - любое изменение карточек, данные изменились
+- "put-get-item" - добавить/удалить в/из корзины, перемещение товаров в / из корзину
+- "modal:open"/"modal:close" - открыть/закрыть модальное окно
+- "address_input:change" - изменение адреса, адрес изменился
+- "email_input:change" - изменение почты, почта изменилась
+- "phone_input:change" - телефон изменился
+- "personal_info_first_next" - щелчок на форме оформить после первого ввода данных
+
 
 
