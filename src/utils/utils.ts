@@ -133,3 +133,14 @@ export function createElement<
     }
     return element;
 }
+
+export function convertSkill2Class(skill: string): string {
+    const skill2class: {[skill: string]: string} = {
+        'софт-скил': 'card__category_soft',
+        'другое': 'card__category_other',
+        'дополнительное': 'card__category_additional',
+        'хард-скил': 'card__category_hard',
+        'кнопка': 'card__category_button'
+    };
+    return skill2class[skill];
+}
