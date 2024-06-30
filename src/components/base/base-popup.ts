@@ -7,7 +7,12 @@ export class BasePopup<T> extends Component<T> {
 	protected events: IEvents;
 	protected body: HTMLElement;
 
-	constructor(container: HTMLElement, content: HTMLElement, events: IEvents, body: HTMLElement) {
+	constructor(
+		container: HTMLElement,
+		content: HTMLElement,
+		events: IEvents,
+		body: HTMLElement
+	) {
 		super(container);
 
 		this.body = body;
@@ -21,7 +26,7 @@ export class BasePopup<T> extends Component<T> {
 
 		container.addEventListener('click', (evt) => {
 			if (evt.target === this.container) {
-			  this.show(false);
+				this.show(false);
 			}
 		});
 	}
@@ -29,9 +34,9 @@ export class BasePopup<T> extends Component<T> {
 	show(view: boolean) {
 		if (view) {
 			this.content.replaceChildren(this.body);
-			this.events.emit("modal:open");
+			this.events.emit('modal:open');
 		} else {
-			this.events.emit("modal:close");
+			this.events.emit('modal:close');
 		}
 		this.toggleClass(this.container, 'modal_active', view);
 	}

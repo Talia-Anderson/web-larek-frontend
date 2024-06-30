@@ -2,13 +2,10 @@ import { ensureElement } from '../utils/utils';
 import { Component } from './base/components';
 
 export interface ICartButton {
-	CartCounter: number;
+	cartCounter: number;
 }
 
-export class CartButton
-	extends Component<ICartButton>
-	implements ICartButton
-{
+export class CartButton extends Component<ICartButton> implements ICartButton {
 	protected elementCartCounter: HTMLElement;
 	constructor(container: HTMLElement) {
 		super(container);
@@ -17,7 +14,7 @@ export class CartButton
 			this.container
 		);
 	}
-	set CartCounter(val: number) {
+	set cartCounter(val: number) {
 		this.elementCartCounter.textContent = String(val);
 	}
 }

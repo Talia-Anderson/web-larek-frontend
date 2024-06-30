@@ -32,7 +32,7 @@ export class CatalogueCard
 		);
 
 		this.container.addEventListener('click', () => {
-			events.emit('click: on_Catalogue_card', {card_id: id});
+			events.emit('click: on_Catalogue_card', { card_id: id });
 		});
 
 		this.currentClass = 'card__category_soft';
@@ -43,7 +43,7 @@ export class CatalogueCard
 
 		this.toggleClass(this.elementCategory, this.currentClass, false);
 
-		this.currentClass = convertSkill2Class(val);			
+		this.currentClass = convertSkill2Class(val);
 
 		this.toggleClass(this.elementCategory, this.currentClass, true);
 	}
@@ -51,7 +51,8 @@ export class CatalogueCard
 		this.elementTitle.textContent = val;
 	}
 	set price(val: number) {
-		this.elementPrice.textContent = val === null ? "бесценно" : String(val) + ' синапсов';
+		this.elementPrice.textContent =
+			val === null ? 'бесценно' : String(val) + ' синапсов';
 	}
 	set image(val: string) {
 		this.elementImage.src = CDN_URL + val;

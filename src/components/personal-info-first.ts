@@ -6,7 +6,7 @@ import { IEvents } from './base/events';
 export interface IPersonalInfoFirst {
 	paymentType: PaymentTypeEnum;
 	deliveryAddress: string;
-	enableButton:boolean;
+	enableButton: boolean;
 }
 
 export class PersonalInfoFirst
@@ -52,11 +52,10 @@ export class PersonalInfoFirst
 				text: target.value,
 			});
 		});
-		this.orderButton.addEventListener("click",(evt)=>{
-    events.emit('click: personal info first button');
-		evt.preventDefault();
-		}
-		);
+		this.orderButton.addEventListener('click', (evt) => {
+			events.emit('click: personal info first button');
+			evt.preventDefault();
+		});
 	}
 
 	set paymentType(val: PaymentTypeEnum) {
@@ -74,7 +73,7 @@ export class PersonalInfoFirst
 
 	set deliveryAddress(val: string) {}
 
-	set enableButton(val:boolean) {
+	set enableButton(val: boolean) {
 		this.setDisabled(this.orderButton, !val);
 	}
 }

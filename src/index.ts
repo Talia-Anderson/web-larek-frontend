@@ -1,5 +1,5 @@
 //простите, что так долго и поздно, у меня сессия была(
-// использую для обозначения корзины слово Cart, 
+// использую для обозначения корзины слово cart,
 // которое отличается от разметки т.к слово Basket
 // имеет немного другой смысл, извините
 
@@ -7,7 +7,13 @@ import './scss/styles.scss';
 
 import { SellAPI } from './components/sell-item-api';
 import { ListModel } from './components/List-model';
-import { IOrder, PaymentTypeEnum, ICardID, IPutGetEvent, IEventText } from './types/index';
+import {
+	IOrder,
+	PaymentTypeEnum,
+	ICardID,
+	IPutGetEvent,
+	IEventText,
+} from './types/index';
 import { API_URL } from './utils/constants';
 import { cloneTemplate, ensureElement } from './utils/utils';
 import { Catalogue } from './components/Catalogue';
@@ -21,6 +27,7 @@ import { PersonalInfoFirst } from './components/personal-info-first';
 import { PersonalInfoSecond } from './components/personal-info-second';
 import { PersonalInfoModel } from './components/personal-info-model';
 import { Success } from './components/success';
+import { Component } from './components/base/components';
 
 //переменные
 
@@ -31,9 +38,12 @@ const apiFetch = new SellAPI(API_URL);
 const bm = new ListModel(events);
 const catalogue = new Catalogue(ensureElement('.gallery'));
 
-apiFetch.getSell().then((response) => {
+apiFetch.getSell()
+	.then((response) => {
 	bm.setItems(response.items);
-});
+})
+	.catch((err) => {return err})
+;
 
 //ивенты и все от них зависящее
 
@@ -56,14 +66,14 @@ const modalContentElement = ensureElement(
 
 const cart = new Cart(modalContainerElement, modalContentElement, events);
 
-const CartElement = ensureElement('.header__basket');
-CartElement.addEventListener('click', () => {
+const cartElement = ensureElement('.header__basket');
+cartElement.addEventListener('click', () => {
 	cart.show(true);
 });
 
 events.on('items: changed', () => {
 	let position = 1;
-	cart.CartItems = bm.getCartItems().map((element) => {
+	cart.cartItems = bm.getCartItems().map((element) => {
 		const htmlElement = new CartCard(
 			cloneTemplate('#card-basket'),
 			events,
@@ -76,7 +86,7 @@ events.on('items: changed', () => {
 });
 
 events.on('items: changed', () => {
-	cart.CartTotal = bm.getTotalSum();
+	cart.cartTotal = bm.getTotalSum();
 });
 const cardPopup = new CardPopup(
 	modalContainerElement,
@@ -87,12 +97,11 @@ const cardPopup = new CardPopup(
 events.on('click: on_Catalogue_card', (id: ICardID) => {
 	cardPopup.id = id.card_id;
 	const itemToSell = bm.getSell(id.card_id);
-	cardPopup.CartButtonEnables = itemToSell.price !== null;
+	cardPopup.cartButtonEnables = itemToSell.price !== null;
 	cardPopup.render(itemToSell);
 	cardPopup.inCart = bm.inCart(cardPopup.id);
 	cardPopup.show(true);
 });
-
 
 events.on('put-get-item', (evt: IPutGetEvent) =>
 	bm.toggleCartState(evt.itemId)
@@ -104,9 +113,17 @@ events.on('items: changed', () => {
 	}
 });
 
-const cartButton = new CartButton(CartElement);
+const cartButton = new CartButton(cartElement);
 events.on('items: changed', () => {
-	cartButton.CartCounter = bm.cartItemsNumber();
+	cartButton.cartCounter = bm.cartItemsNumber();
+	let state: boolean;
+	if (bm.cartItemsNumber() === 0) {
+		state = false;
+	}
+	else state = true;
+	cart.enableBtn = state;
+	//cart.enableBtn(state);
+	
 });
 
 events.on('click: delete__card', (item: ICardID) => {
@@ -156,14 +173,13 @@ events.on('modal:close', () => {
 	windowWrapper.classList.remove('page__wrapper_locked');
 });
 
-
 events.on('address_input:change', (data: IEventText) => {
 	personalInfoModel.address = data.text;
 });
 
 function validatePersonalInfoFirstButtonNext() {
 	paymentType.enableButton =
-		personalInfoModel.paymentType!== undefined  &&
+		personalInfoModel.paymentType !== undefined &&
 		Boolean(personalInfoModel.address);
 }
 
@@ -183,40 +199,38 @@ events.on('phone_input:change', (data: IEventText) => {
 
 function validatePersonalInfoSecondButtonNext() {
 	personalInfo.enableButton =
-		Boolean(personalInfoModel.email) &&
-		Boolean(personalInfoModel.phone);
+		Boolean(personalInfoModel.email) && Boolean(personalInfoModel.phone);
 }
 
 events.on('items: changed', validatePersonalInfoSecondButtonNext);
 
-const success = new Success(
-	modalContainerElement,
-	modalContentElement,
-	events
-);
+const success = new Success(modalContainerElement, modalContentElement, events);
 
-events.on('click: personalInfoSecondNext', ()=>{
+events.on('click: personalInfoSecondNext', () => {
 	personalInfo.show(false);
 
 	const orderToSend = {
 		phone: personalInfoModel.phone,
 		email: personalInfoModel.email,
-		payment: personalInfoModel.paymentType == PaymentTypeEnum.ONLINE ? "online": "on_PLACE",
+		payment:
+			personalInfoModel.paymentType == PaymentTypeEnum.ONLINE
+				? 'online'
+				: 'on_PLACE',
 		address: personalInfoModel.address,
 		total: bm.getTotalSum(),
-		items: bm.getCartItems().map((item)=>item.id)
-	}
+		items: bm.getCartItems().map((item) => item.id),
+	};
 
-	apiFetch.putOrder(orderToSend as IOrder)
-	  .then(()=>{
+	apiFetch
+		.putOrder(orderToSend as IOrder)
+		.then(() => {
 			success.show(true);
 			success.totalPrice = bm.getTotalSum();
 			bm.clearCart();
 		})
-		.catch((data)=>console.log("payment problems: ", data));
+		.catch((data) => console.log('payment problems: ', data));
 });
 
-events.on('click: order success',()=>{
+events.on('click: order success', () => {
 	success.show(false);
 });
-

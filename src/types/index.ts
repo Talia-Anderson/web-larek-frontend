@@ -4,10 +4,10 @@ export enum PaymentTypeEnum {
 }
 
 export interface IPersonalInfoModel {
-  paymentType: PaymentTypeEnum;
+	paymentType: PaymentTypeEnum;
 	address: string;
 	email: string;
-	phone: string; 
+	phone: string;
 }
 
 export interface ICardID {
@@ -22,31 +22,31 @@ export interface IEventText {
 	text: string;
 }
 
-//for selling item 
+//for selling item
 
 export interface Sell {
-  id: string;
-  category: string;
-  description: string;
-  title: string;
-  price: number;
-  image: string;
+	id: string;
+	category: string;
+	description: string;
+	title: string;
+	price: number;
+	image: string;
 }
 
 export interface SellFromAPI {
-  total: number;
-  items: Sell[];
+	total: number;
+	items: Sell[];
 }
 
 export interface SellList extends Sell {
-  inCart: boolean
+	inCart: boolean;
 }
 
 export interface IOrder {
-  payment: string;
-  address: string;
-  email: string;
-  phone: string;
-  total: number;
-  items: string[];
+	payment: string;
+	address: string;
+	email: string;
+	phone: string;
+	total: number;
+	items: string[];
 }

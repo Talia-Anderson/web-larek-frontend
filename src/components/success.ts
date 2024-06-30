@@ -3,19 +3,16 @@ import { BasePopup } from './base/base-popup';
 import { IEvents } from './base/events';
 
 export interface ISuccess {
-	totalPrice:number;
+	totalPrice: number;
 }
 
-export class Success
-	extends BasePopup<ISuccess>
-	implements ISuccess
-{
+export class Success extends BasePopup<ISuccess> implements ISuccess {
 	protected orderSuccessClose: HTMLButtonElement;
 	protected successDescription: HTMLElement;
 
 	constructor(container: HTMLElement, content: HTMLElement, events: IEvents) {
 		super(container, content, events, cloneTemplate('#success'));
-	
+
 		this.orderSuccessClose = ensureElement<HTMLButtonElement>(
 			'.order-success__close',
 			this.body
@@ -25,15 +22,13 @@ export class Success
 			this.body
 		);
 
-		
-		this.orderSuccessClose.addEventListener("click",(evt)=>{
-    events.emit('click: order success');
-		evt.preventDefault();
-		}
-		);
+		this.orderSuccessClose.addEventListener('click', (evt) => {
+			events.emit('click: order success');
+			evt.preventDefault();
+		});
 	}
 
 	set totalPrice(val: number) {
-		this.successDescription.textContent = `Списано ${val} синапсов`; 
+		this.successDescription.textContent = `Списано ${val} синапсов`;
 	}
 }
