@@ -60,6 +60,7 @@ yarn build
   constructor(baseUrl: string, options: RequestInit = {}) конструктор
   get - получаем ответ в формате промиса
   post - отправка данных
+  handleResponse<T>(response: Response): Promise<T> -  проверка на то, успешно ли был выполнен запрос к серверу
 
 - SellAPI - получает товары с сервера
   getSell(): Promise - получить товары с сервера
