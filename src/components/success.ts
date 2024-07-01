@@ -29,6 +29,7 @@ export class Success extends BasePopup<ISuccess> implements ISuccess {
 	}
 
 	set totalPrice(val: number) {
-		this.successDescription.textContent = `Списано ${val} синапсов`;
+		this.setText(this.successDescription, `Списано ${val} синапсов`)
+		//this.successDescription.textContent = ;
 	}
 }

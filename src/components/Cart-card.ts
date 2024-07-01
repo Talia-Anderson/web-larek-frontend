@@ -29,14 +29,17 @@ export class CartCard extends Component<ICartCard> implements ICartCard {
 	}
 
 	set listPosition(val: number) {
-		this.elementPosition.textContent = String(val);
+		this.setText(this.elementPosition, String(val))
+		//this.elementPosition.textContent = ;
 	}
 
 	set title(val: string) {
-		this.elementTitle.textContent = val;
+		this.setText(this.elementTitle, val)
+		//this.elementTitle.textContent = val;
 	}
 
 	set price(val: number) {
-		this.elementPrice.textContent = String(val) + ' синапсов';
+		this.setText(this.elementPrice,String(val) + ' синапсов')
+		//this.elementPrice.textContent = ;
 	}
 }

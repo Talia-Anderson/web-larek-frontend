@@ -47,17 +47,6 @@ apiFetch.getSell()
 
 //ивенты и все от них зависящее
 
-events.on('items: changed', () => {
-	catalogue.CatalogueItems = bm.getCatalogItems().map((item) => {
-		const card = new CatalogueCard(
-			cloneTemplate('#card-catalog'),
-			events,
-			item.id
-		);
-		return card.render(item);
-	});
-});
-
 const modalContainerElement = ensureElement('#modal-container');
 const modalContentElement = ensureElement(
 	'.modal__content',
@@ -71,23 +60,6 @@ cartElement.addEventListener('click', () => {
 	cart.show(true);
 });
 
-events.on('items: changed', () => {
-	let position = 1;
-	cart.cartItems = bm.getCartItems().map((element) => {
-		const htmlElement = new CartCard(
-			cloneTemplate('#card-basket'),
-			events,
-			element.id
-		);
-		htmlElement.listPosition = position;
-		position = position + 1;
-		return htmlElement.render(element);
-	});
-});
-
-events.on('items: changed', () => {
-	cart.cartTotal = bm.getTotalSum();
-});
 const cardPopup = new CardPopup(
 	modalContainerElement,
 	modalContentElement,
@@ -107,24 +79,7 @@ events.on('put-get-item', (evt: IPutGetEvent) =>
 	bm.toggleCartState(evt.itemId)
 );
 
-events.on('items: changed', () => {
-	if (cardPopup.id) {
-		cardPopup.inCart = bm.inCart(cardPopup.id);
-	}
-});
-
 const cartButton = new CartButton(cartElement);
-events.on('items: changed', () => {
-	cartButton.cartCounter = bm.cartItemsNumber();
-	let state: boolean;
-	if (bm.cartItemsNumber() === 0) {
-		state = false;
-	}
-	else state = true;
-	cart.enableBtn = state;
-	//cart.enableBtn(state);
-	
-});
 
 events.on('click: delete__card', (item: ICardID) => {
 	bm.toggleCartState(item.card_id);
@@ -160,7 +115,42 @@ events.on('click: cash payment', () => {
 });
 
 events.on('items: changed', () => {
+	let position = 1;
+	cart.cartItems = bm.getCartItems().map((element) => {
+		const htmlElement = new CartCard(
+			cloneTemplate('#card-basket'),
+			events,
+			element.id
+		);
+		htmlElement.listPosition = position;
+		position = position + 1;
+		return htmlElement.render(element);
+	});
+	if (cardPopup.id) {
+		cardPopup.inCart = bm.inCart(cardPopup.id);
+	}
+	cart.cartTotal = bm.getTotalSum();
+	cartButton.cartCounter = bm.cartItemsNumber();
+	let state: boolean;
+	if (bm.cartItemsNumber() === 0) {
+		state = false;
+	}
+	else state = true;
+	cart.enableBtn = state;
 	paymentType.render({ paymentType: personalInfoModel.paymentType });
+	catalogue.CatalogueItems = bm.getCatalogItems().map((item) => {
+		const card = new CatalogueCard(
+			cloneTemplate('#card-catalog'),
+			events,
+			item.id
+		);
+		return card.render(item);
+	});
+	paymentType.enableButton =
+		personalInfoModel.paymentType !== undefined &&
+		Boolean(personalInfoModel.address);
+	personalInfo.enableButton =
+		Boolean(personalInfoModel.email) && Boolean(personalInfoModel.phone);
 });
 
 const windowWrapper = ensureElement('.page__wrapper');
@@ -177,13 +167,12 @@ events.on('address_input:change', (data: IEventText) => {
 	personalInfoModel.address = data.text;
 });
 
-function validatePersonalInfoFirstButtonNext() {
-	paymentType.enableButton =
-		personalInfoModel.paymentType !== undefined &&
-		Boolean(personalInfoModel.address);
-}
+// function validatePersonalInfoFirstButtonNext() {
+// 	paymentType.enableButton =
+// 		personalInfoModel.paymentType !== undefined &&
+// 		Boolean(personalInfoModel.address);
+// }
 
-events.on('items: changed', validatePersonalInfoFirstButtonNext);
 events.on('click: personal info first button', () => {
 	paymentType.show(false);
 	personalInfo.show(true);
@@ -197,12 +186,10 @@ events.on('phone_input:change', (data: IEventText) => {
 	personalInfoModel.phone = data.text;
 });
 
-function validatePersonalInfoSecondButtonNext() {
-	personalInfo.enableButton =
-		Boolean(personalInfoModel.email) && Boolean(personalInfoModel.phone);
-}
-
-events.on('items: changed', validatePersonalInfoSecondButtonNext);
+// function validatePersonalInfoSecondButtonNext() {
+// 	personalInfo.enableButton =
+// 		Boolean(personalInfoModel.email) && Boolean(personalInfoModel.phone);
+// }
 
 const success = new Success(modalContainerElement, modalContentElement, events);
 
@@ -234,3 +221,4 @@ events.on('click: personalInfoSecondNext', () => {
 events.on('click: order success', () => {
 	success.show(false);
 });
+

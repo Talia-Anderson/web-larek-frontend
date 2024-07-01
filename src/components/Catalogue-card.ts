@@ -39,7 +39,8 @@ export class CatalogueCard
 	}
 
 	set category(val: string) {
-		this.elementCategory.textContent = val;
+		this.setText(this.elementCategory, val)
+		//this.elementCategory.textContent = val;
 
 		this.toggleClass(this.elementCategory, this.currentClass, false);
 
@@ -48,11 +49,13 @@ export class CatalogueCard
 		this.toggleClass(this.elementCategory, this.currentClass, true);
 	}
 	set title(val: string) {
-		this.elementTitle.textContent = val;
+		this.setText(this.elementTitle, val)
+		//this.elementTitle.textContent = val;
 	}
 	set price(val: number) {
-		this.elementPrice.textContent =
-			val === null ? 'бесценно' : String(val) + ' синапсов';
+		this.setText(this.elementPrice, val === null ? 'бесценно' : String(val) + ' синапсов')
+		//this.elementPrice.textContent =
+			
 	}
 	set image(val: string) {
 		this.elementImage.src = CDN_URL + val;

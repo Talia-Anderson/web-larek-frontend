@@ -36,7 +36,8 @@ export class Cart extends BasePopup<ICart> implements ICart {
 	}
 
 	set cartTotal(val: number) {
-		this.cartItemsNumberElement.textContent = String(val) + ' синапсов';
+		this.setText(this.cartItemsNumberElement, String(val) + ' синапсов')
+		//this.cartItemsNumberElement.textContent = ;
 	}
 
 	set enableBtn(val:boolean) {

@@ -52,7 +52,8 @@ export class CardPopup extends BasePopup<ICardPopup> implements ICardPopup {
 	}
 
 	set category(val: string) {
-		this.elementCategory.textContent = val;
+		this.setText(this.elementCategory,val);
+		//this.elementCategory.textContent = val;
 
 		this.toggleClass(this.elementCategory, this.currentClass, false);
 
@@ -62,16 +63,18 @@ export class CardPopup extends BasePopup<ICardPopup> implements ICardPopup {
 	}
 
 	set title(val: string) {
-		this.elementTitle.textContent = val;
+		this.setText(this.elementTitle,val)
+		//this.elementTitle.textContent = val;
 	}
 
 	set description(val: string) {
-		this.elementDescription.textContent = val;
+		this.setText(this.elementDescription,val);
+		//this.elementDescription.textContent = val;
 	}
 
 	set price(val: number) {
-		this.elementPrice.textContent =
-			val === null ? 'бесценно' : String(val) + ' синапсов';
+		this.setText(this.elementPrice, val === null ? 'бесценно' : String(val) + ' синапсов')
+		//this.elementPrice.textContent =
 	}
 
 	set image(val: string) {
@@ -92,6 +95,7 @@ export class CardPopup extends BasePopup<ICardPopup> implements ICardPopup {
 	}
 
 	set inCart(val: boolean) {
-		this.cartPutGetButton.textContent = val ? 'Из корзины' : 'В корзину';
+		this.setText(this.cartPutGetButton,val ? 'Из корзины' : 'В корзину')
+		//this.cartPutGetButton.textContent = ;
 	}
 }

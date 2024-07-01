@@ -15,6 +15,7 @@ export class CartButton extends Component<ICartButton> implements ICartButton {
 		);
 	}
 	set cartCounter(val: number) {
-		this.elementCartCounter.textContent = String(val);
+		this.setText(this.elementCartCounter, String(val))
+		//this.elementCartCounter.textContent = ;
 	}
 }
